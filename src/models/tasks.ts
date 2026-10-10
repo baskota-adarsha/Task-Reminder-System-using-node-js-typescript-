@@ -33,5 +33,5 @@ Task.init(
     userId: { type: DataTypes.INTEGER, allowNull: false },
   },
 
-  { sequelize, tableName: "Users" },
+  { sequelize, tableName: "Tasks" },
 );
