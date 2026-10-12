@@ -14,8 +14,8 @@ export class Task extends Model<
   declare id: CreationOptional<number>;
   declare title: string;
   declare remindAt: CreationOptional<Date | null>;
-  declare reminded: boolean;
-  declare done: boolean;
+  declare reminded: CreationOptional<boolean>;
+  declare done: CreationOptional<boolean>;
   declare userId: number;
 }
 
