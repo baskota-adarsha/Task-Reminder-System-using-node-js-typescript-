@@ -15,19 +15,16 @@ router.use(auth);
  * /tasks:
  *   get:
  *     tags: [Tasks]
- *     summary: List all my tasks
+ *     summary: List my tasks (paginated)
  *     security: [{ bearerAuth: [] }]
  *     parameters:
- *       - in: query
- *         name: done
- *         schema:
- *           type: boolean
- *         description: Filter by completion status
+ *       - { in: query, name: page, schema: { type: integer, default: 1 } }
+ *       - { in: query, name: limit, schema: { type: integer, default: 10, maximum: 50 } }
+ *       - { in: query, name: done, schema: { type: boolean }, description: Filter by done }
  *     responses:
  *       200:
- *         description: A list of tasks
- *       401:
- *         description: Missing or invalid token
+ *         description: A page of tasks plus meta (total, page, limit, totalPages)
+ *       401: { description: Missing or invalid token }
  */
 
 router.get("/", listTasks);
