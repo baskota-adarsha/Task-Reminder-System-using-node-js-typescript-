@@ -1,5 +1,6 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
 import passport from "./config/passport";
 import authRoutes from "./routes/auth.routes";
 import taskRoutes from "./routes/task.routes";
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
-
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 
