@@ -27,7 +27,7 @@ export default function LoginPage({ onLogin }: Props) {
   return (
     <div className="box">
       <div className="card">
-        <h1>✈️ TaskPilot</h1>
+        <h1> Task Reminder System</h1>
         <form onSubmit={submit}>
           <input
             type="email"
