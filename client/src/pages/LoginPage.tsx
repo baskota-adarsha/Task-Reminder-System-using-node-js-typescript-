@@ -1,6 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { call, saveToken } from "../helpers/api";
-export default function LoginPage() {
+
+interface Props {
+  onLogin: () => void;
+}
+export default function LoginPage({ onLogin }: Props) {
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +18,7 @@ export default function LoginPage() {
       if (isRegister) await call("/auth/register", "POST", { email, password });
       const data = await call("/auth/login", "POST", { email, password });
       saveToken(data.token);
+      onLogin();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong");
     }
