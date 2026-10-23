@@ -1,11 +1,19 @@
 import "./App.css";
 import { useState } from "react";
-import { getToken } from "./helpers/api";
+import { getToken, removeToken } from "./helpers/api";
 import LoginPage from "./pages/LoginPage";
+import TasksPage from "./pages/TasksPage";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!getToken());
 
   if (!loggedIn) return <LoginPage onLogin={() => setLoggedIn(true)} />;
-  return <p>Hey</p>;
+  return (
+    <TasksPage
+      onLogout={() => {
+        removeToken();
+        setLoggedIn(false);
+      }}
+    />
+  );
 }
