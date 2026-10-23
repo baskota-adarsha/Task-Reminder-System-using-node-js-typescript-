@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { call } from "../helpers/api";
+import { markShown, wasShown } from "../helpers/shown";
 import type { Task } from "../types/task";
 import AddTaskForm from "../components/AddTaskForm";
 import TaskItem from "../components/TaskItem";
@@ -13,7 +14,6 @@ export default function TasksPage({ onLogout }: Props) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState("");
   const [refresh, setRefresh] = useState(0);
-  const alreadyShown = useRef(new Set<number>()); // tasks we already showed a toast for
 
   // load the tasks on start, and again whenever "refresh" changes
   useEffect(() => {
@@ -33,12 +33,15 @@ export default function TasksPage({ onLogout }: Props) {
     function check() {
       for (const task of tasks) {
         if (task.done || !task.remindAt) continue;
-        if (alreadyShown.current.has(task.id)) continue;
+
+        // id + time: if you change the reminder time, it counts as a new reminder
+        const key = `${task.id}-${task.remindAt}`;
+        if (wasShown(key)) continue;
 
         const passed = Date.now() - new Date(task.remindAt).getTime();
         if (passed < 0 || passed > 120000) continue; // not yet, or older than 2 minutes
 
-        alreadyShown.current.add(task.id);
+        markShown(key); // remember it, even after a reload
         toast(
           (t) => (
             <span>
