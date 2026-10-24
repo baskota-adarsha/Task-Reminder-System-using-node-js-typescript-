@@ -52,7 +52,7 @@ Node.js, TypeScript, Express, PostgreSQL, Sequelize, Passport (JWT), bcrypt, nod
    | `DB_PORT`       | Database port                          | `5432`                        |
    | `DB_USER`       | Database user                          | `postgres`                    |
    | `DB_PASS`       | Database password                      | `postgres`                    |
-   | `DB_NAME`       | Database name                          | `taskpilot`                   |
+   | `DB_NAME`       | Database name                          | `taskreminder`                |
    | `JWT_SECRET`    | Long random secret used to sign tokens | `change-me-to-something-long` |
    | `CLIENT_ORIGIN` | Frontend address allowed by CORS       | `http://localhost:5173`       |
 
